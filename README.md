@@ -1,1 +1,7 @@
-# mlp
+# mlp  
+* [JTLA.pdf](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/JTLA.pdf)
+* [W17-5017.pdf](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/W17-5017.pdf)
+* [kentonmurray.pdf](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/kentonmurray.pdf)
+* [links.txt](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/links.txt)
+* [ml_report.pdf](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/ml_report.pdf)
+* [run.py](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/run.py)
