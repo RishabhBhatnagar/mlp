@@ -4,4 +4,5 @@
 * [kentonmurray.pdf](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/kentonmurray.pdf)
 * [links.txt](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/links.txt)
 * [ml_report.pdf](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/ml_report.pdf)
+* [MahanaJohnsApte.pdf](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/MahanaJohnsApte.pdf)
 * [run.py](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/run.py)
