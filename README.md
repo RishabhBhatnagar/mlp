@@ -1,6 +1,6 @@
 # mlp  
 ### Dataset  
-https://github.com/RishabhBhatnagar/dataset  
+https://github.com/RishabhBhatnagar/dataset/blob/master/dataset/training.tsv    
 
 ### References  
 * [JTLA.pdf](https://github.com/RishabhBhatnagar/TE/blob/master/FOLDER/JTLA.pdf)
