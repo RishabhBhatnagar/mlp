@@ -12,7 +12,10 @@ from keras.models import load_model
 from os.path import exists
 import pickle
 
-print("Loaded Libraries.")
+
+class Constants:
+	lstm_model_name = "lstm_model"
+	gensim_model_name = 'gensim_model'
 
 
 def get_list_words(essay):
