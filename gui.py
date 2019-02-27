@@ -12,7 +12,7 @@ def home():
 def submit_essay():
 	essay = flask.request.form.get("essay_block")
 	print(predict_single_essay(essay, Constants.gensim_model_name, Constants.lstm_model_name))
-	return ""
+	return render_template("home.html")
 
 if __name__ == '__main__':
     app.run(debug=1)
