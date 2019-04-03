@@ -13,6 +13,7 @@ from os.path import exists
 import pickle
 from keras import backend as K
 
+
 class Constants:
 	lstm_model_name = "lstm_model"
 	gensim_model_name = 'gensim_model'
@@ -137,7 +138,7 @@ def predict_single_essay(essay, gensim_model_name, lstm_model_name, gensim_model
         lstm_model = load_model(lstm_model_name)
     cleant_essay = [get_list_words(essay)]
     features = np.array(get_avg_feature_vectors(cleant_essay, model=gensim_model, vector_size=300))
-    prediction = np.around(lstm_model.predict(features.reshape(features.shape[0], 1, features.shape[1])).reshape(1)[0])
+    prediction = np.around(np.array(lstm_model.predict(features.reshape(features.shape[0], 1, features.shape[1]))[-1]).reshape(1)[0])
     K.clear_session()
     return prediction
 
@@ -154,9 +155,10 @@ def save_gensim_model(model, model_name):
 
 if __name__ == '__main__':
     if True:
-        lstm_model_name = "lstm_model"
-        gensim_model_name = 'gensim_model'
-        data = read_csv('~/Desktop/RishabhBhatnagar/dataset/dataset/training.tsv', encoding='latin', sep='\t')
+        lstm_model_name = Constants.lstm_model_name
+        gensim_model_name = Constants.gensim_model_name
+        #../dataset/dataset/
+        data = read_csv('training.tsv', encoding='latin', sep='\t')
         train_data = data[:8 * len(data['essay']) // 10]
         test_data = data[8 * len(data['essay']) // 10:]
         del data  # Freeing up memory.
