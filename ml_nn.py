@@ -107,7 +107,7 @@ def get_avg_feature_vectors(essays, model, vector_size):
     return essay_feature_vecs
 
 
-def get_model(vector_size=500, print_summary=True):
+def get_model(vector_size=300, print_summary=True):
     model = Sequential()
 
     # Input layer.
@@ -138,7 +138,7 @@ def predict_single_essay(essay, gensim_model_name, lstm_model_name, gensim_model
         lstm_model = load_model(lstm_model_name)
     cleant_essay = [get_list_words(essay)]
     features = np.array(get_avg_feature_vectors(cleant_essay, model=gensim_model, vector_size=300))
-    prediction = np.around(np.array(lstm_model.predict(features.reshape(features.shape[0], 1, features.shape[1]))[-1]).reshape(1)[0])
+    prediction = np.array(lstm_model.predict(features.reshape(features.shape[0], 1, features.shape[1]))[-1]).reshape(1)[0]
     K.clear_session()
     return prediction
 
@@ -158,17 +158,17 @@ if __name__ == '__main__':
         lstm_model_name = Constants.lstm_model_name
         gensim_model_name = Constants.gensim_model_name
         #../dataset/dataset/
-        data = read_csv('training.tsv', encoding='latin', sep='\t')
+        data = read_csv('https://raw.githubusercontent.com/RishabhBhatnagar/dataset/master/dataset/filtered_train.csv')
         train_data = data[:8 * len(data['essay']) // 10]
         test_data = data[8 * len(data['essay']) // 10:]
         del data  # Freeing up memory.
         train_essays = train_data['essay']
         test_essays = test_data['essay']
-        y_train = train_data['rater1_domain1']
-        y_test = test_data['rater1_domain1']
+        y_train = train_data['domain1_score']
+        y_test = test_data['domain1_score']
 
         vector_size = 300
-        min_word_count = 40
+        min_word_count = 20
         num_workers = 4
         context = 10
         down_sampling = 1e-3
@@ -178,7 +178,7 @@ if __name__ == '__main__':
         lstm_model = load_model(lstm_model_name)
         gensim_model = load_gensim_model(gensim_model_name)
         print(predict_single_essay(
-            "Dear local newspaper, I think effects computers have on people are great learning skills/affects because they give us time to chat with friends/new people, helps us learn about the globe(astronomy) and keeps us out of troble! Thing about! Dont you think so? How would you feel if your teenager is always on the phone with friends! Do you ever time to chat with your friends or buisness partner about things. Well now - there's a new way to chat the computer, theirs plenty of sites on the internet to do so: @ORGANIZATION1, @ORGANIZATION2, @CAPS1, facebook, myspace ect. Just think now while your setting up meeting with your boss on the computer, your teenager is having fun on the phone not rushing to get off cause you want to use it. How did you learn about other countrys/states outside of yours? Well I have by computer/internet, it's a new way to learn about what going on in our time! You might think your child spends a lot of time on the computer, but ask them so question about the economy, sea floor spreading or even about the @DATE1's you'll be surprise at how much he/she knows. Believe it or not the computer is much interesting then in class all day reading out of books. If your child is home on your computer or at a local library, it's better than being out with friends being fresh, or being perpressured to doing something they know isnt right. You might not know where your child is, @CAPS2 forbidde in a hospital bed because of a drive-by. Rather than your child on the computer learning, chatting or just playing games, safe and sound in your home or community place. Now I hope you have reached a point to understand and agree with me, because computers can have great effects on you or child because it gives us time to chat with friends/new people, helps us learn about the globe and believe or not keeps us out of troble. Thank you for listening.",
+            "The features of the setting affect the cyclist in many ways. The features of the setting that affect the cyclist is the lact of information on were to go and the lack of water. This was a problem because he needed water for his trip and directions on were to go.",
             gensim_model_name=gensim_model_name, gensim_model=gensim_model, lstm_model=lstm_model,
             lstm_model_name=lstm_model_name))
     else:
@@ -207,7 +207,7 @@ if __name__ == '__main__':
         test_data_vectors = np.reshape(test_data_vectors, (test_data_vectors.shape[0], 1, test_data_vectors.shape[1]))
 
         lstm_model = get_model(vector_size)
-        lstm_model.fit(train_data_vectors, y_train, batch_size=150, epochs=60)
+        lstm_model.fit(train_data_vectors, y_train, batch_size=10, epochs=60)
 
         lstm_model.save(lstm_model_name)
         y_pred = np.around(lstm_model.predict(test_data_vectors))
