@@ -131,7 +131,7 @@ def get_model(vector_size=300, print_summary=True):
     return model
 
 
-def predict_single_essay(essay, gensim_model_name, lstm_model_name, gensim_model=None, lstm_model=None):
+def predict_single_essay(essay, gensim_model_name, lstm_model_name, gensim_model=None, lstm_model=None, outof=10):
     if gensim_model is None:
         gensim_model = load_gensim_model(gensim_model_name)
     if lstm_model is None:
@@ -140,7 +140,11 @@ def predict_single_essay(essay, gensim_model_name, lstm_model_name, gensim_model
     features = np.array(get_avg_feature_vectors(cleant_essay, model=gensim_model, vector_size=300))
     prediction = np.array(lstm_model.predict(features.reshape(features.shape[0], 1, features.shape[1]))[-1]).reshape(1)[0]
     K.clear_session()
-    return prediction
+    if len(essay.split()) < 40:
+        return "Essay too short!!"
+    if str(prediction) == 'nan':
+        return "Invalid input given." 
+    return "{}/{}".format(int(np.around(prediction*outof)), outof)
 
 
 def load_gensim_model(file_name):
@@ -193,6 +197,7 @@ if __name__ == '__main__':
         model.init_sims(replace=True)
         save_gensim_model(model, gensim_model_name)
 
+        # Removed stopwords
         clean_train_essays = [get_list_words(essay_v) for essay_v in train_essays]
         clean_test_essays = [get_list_words(essay_v) for essay_v in test_essays]
 
